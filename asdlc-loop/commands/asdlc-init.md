@@ -24,14 +24,19 @@ the user which directory before writing.
    Presets:
    | Stack | test | lint | types | format |
    |---|---|---|---|---|
-   | Node/TS | `vitest run` | `eslint .` | `tsc --noEmit` | `prettier -w` |
-   | Python | `pytest` | `ruff check` | `mypy .` | `ruff format` |
+   | Node/TS | `npx vitest run` | `npx eslint .` | `npx tsc --noEmit` | `npx prettier -w` |
+   | Python | `uv run pytest \|\| [ $? -eq 5 ]` | `uv run ruff check` | `uv run mypy .` | `uv run ruff format` |
    | Go | `go test ./...` | `go vet ./...` | — | `gofmt -w` |
    | None | — | — | — | `prettier -w` (or leave empty) |
 
+   **Gate commands must resolve in the project's toolchain env**, so prefix them: Python → `uv run`
+   (you run `uv init` in step 4); Node → `npx` (tools live in `node_modules/.bin`); Go tools are on PATH.
+   The `|| [ $? -eq 5 ]` on pytest lets an **empty baseline pass** (pytest exits 5 on "no tests
+   collected") while a real failure (exit 1) still blocks the gate.
+
    Write them with jq, e.g.:
    ```bash
-   jq '.commands={test:"vitest run",lint:"eslint .",types:"tsc --noEmit",format:"prettier -w"}' \
+   jq '.commands={test:"npx vitest run",lint:"npx eslint .",types:"npx tsc --noEmit",format:"npx prettier -w"}' \
      .claude/asdlc.config.json > c && mv c .claude/asdlc.config.json
    ```
 
