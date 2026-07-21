@@ -1,0 +1,14 @@
+{
+  "name": "asdlc-loop-marketplace",
+  "owner": { "name": "Michael Miller" },
+  "metadata": {
+    "description": "Local marketplace hosting the ASDLC-Loop plugin — the seed that scaffolds the Director's Loop governance into any repo."
+  },
+  "plugins": [
+    {
+      "name": "asdlc-loop",
+      "source": "./asdlc-loop",
+      "description": "Scaffolds and governs the Director's Loop (ASDLC) development lifecycle: plants committed per-project gates, a /build orchestrator, and a clean-context reviewer into a repo."
+    }
+  ]
+}
