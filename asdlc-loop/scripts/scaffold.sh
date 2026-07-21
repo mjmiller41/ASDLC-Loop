@@ -16,7 +16,11 @@ LEVEL="${2:-standard}"
 
 mkdir -p "$TARGET"
 cd "$TARGET"
-[ -d .git ] || git init -q
+# Fresh repos always start on 'main' (portable across git versions; set before first commit).
+if [ ! -d .git ]; then
+  git init -q
+  git symbolic-ref HEAD refs/heads/main 2>/dev/null || true
+fi
 
 mkdir -p .claude/asdlc .claude/commands .claude/agents docs/specs .github/workflows
 
