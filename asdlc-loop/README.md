@@ -6,7 +6,7 @@ Seed plugin for the **Director's Loop** (an Agentic SDLC for solo + Claude Code)
 ## The model: plugin is the seed, the repo is self-contained
 
 - The **plugin** is the one machine-global thing — it must exist before any project does.
-- `/loop-init` (or `/loop-adopt`) **plants governance into the target repo and commits it**:
+- `/asdlc-init` (or `/asdlc-adopt`) **plants governance into the target repo and commits it**:
   the gates, the `/build` orchestrator, the `/loop-off` escape hatch, the clean-context
   `code-reviewer` subagent, and `loop.config.json`.
 - After genesis, the repo is **self-sufficient**: a teammate who clones it gets `/build` and the
