@@ -8,8 +8,8 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$DIR/guard.sh"
 cat >/dev/null    # drain stdin payload (unused)
 
-loop_active || exit 0
-phase_in "$(loop_phase)" build || exit 0
+asdlc_active || exit 0
+phase_in "$(asdlc_phase)" build || exit 0
 
 cat <<'JSON'
 {"hookSpecificOutput":{"hookEventName":"SubagentStop","additionalContext":"ASDLC-Loop: a build subagent just finished. Before advancing to Ship, dispatch the committed reviewer (.claude/agents/code-reviewer.md) in a clean context to review the diff against docs/specs. The agent that wrote the code may not approve it."}}

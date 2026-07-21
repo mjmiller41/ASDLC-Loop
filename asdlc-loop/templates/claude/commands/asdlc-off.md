@@ -1,13 +1,13 @@
 ---
-name: loop-off
-description: Disarm the Director's Loop build-scoped gates immediately (escape hatch). The verify-gate and reviewer nudge go dormant; secrets + format stay always-on.
+name: asdlc-off
+description: Disarm the ASDLC Loop build-scoped gates immediately (escape hatch). The verify-gate and reviewer nudge go dormant; secrets + format stay always-on.
 ---
 
 Disarm the build-scoped gates for this project. Run:
 
 ```bash
-if [ -f .claude/loop-state.json ]; then
-  jq '.active=false' .claude/loop-state.json > .claude/loop-state.tmp && mv .claude/loop-state.tmp .claude/loop-state.json
+if [ -f .claude/asdlc-state.json ]; then
+  jq '.active=false' .claude/asdlc-state.json > .claude/asdlc-state.tmp && mv .claude/asdlc-state.tmp .claude/asdlc-state.json
   echo "ASDLC-Loop: build gates disarmed. (secret-scan + format remain always-on)"
 else
   echo "ASDLC-Loop: no active build state — nothing to disarm."

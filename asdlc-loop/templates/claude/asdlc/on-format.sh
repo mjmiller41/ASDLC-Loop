@@ -10,5 +10,5 @@ FILE="$(printf '%s' "$PAYLOAD" | jq -r '.tool_input.file_path // .tool_response.
 FMT="$(cfg '.commands.format')"
 [ -n "$FMT" ] || exit 0
 # Convention: format command is a prefix; we append the single file path.
-( cd "$LOOP_ROOT" && eval "$FMT \"$FILE\"" ) >/dev/null 2>&1 || true
+( cd "$ASDLC_ROOT" && eval "$FMT \"$FILE\"" ) >/dev/null 2>&1 || true
 exit 0

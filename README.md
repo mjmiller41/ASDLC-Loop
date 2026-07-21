@@ -25,5 +25,5 @@ Then run `/reload-plugins` in your session so the new commands load.
 | `/asdlc-init` | Scaffold a **new** project: git init, stack-aware toolchain, and the committed `.claude/` governance, all in commit 1. |
 | `/asdlc-adopt` | Retrofit an **existing** repo, idempotently — adds only what's missing. |
 
-Everything the commands plant (hooks, `/build`, `/loop-off`, the reviewer subagent, `loop.config.json`)
+Everything the commands plant (hooks, `/build`, `/asdlc-off`, the reviewer subagent, `asdlc.config.json`)
 lives in the target project and is committed there. See [`asdlc-loop/README.md`](./asdlc-loop/README.md).

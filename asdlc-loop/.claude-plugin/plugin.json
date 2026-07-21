@@ -1,7 +1,7 @@
 {
   "name": "asdlc-loop",
   "version": "0.1.0",
-  "description": "Seed plugin for the Director's Loop (ASDLC). Its only job is genesis: /loop-init scaffolds committed, self-contained governance (gates, a /build orchestrator, a clean-context reviewer) into a new or existing repo. The plugin ships NO hooks of its own — enforcement lives in each project and travels on git clone.",
+  "description": "Seed plugin for the ASDLC Loop (ASDLC). Its only job is genesis: /asdlc-init scaffolds committed, self-contained governance (gates, a /build orchestrator, a clean-context reviewer) into a new or existing repo. The plugin ships NO hooks of its own — enforcement lives in each project and travels on git clone.",
   "author": { "name": "Michael Miller" },
   "keywords": ["sdlc", "agentic", "workflow", "hooks", "tdd", "governance", "spec-driven"],
   "license": "MIT"

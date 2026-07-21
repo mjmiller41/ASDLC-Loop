@@ -1,10 +1,10 @@
 ---
 name: build
-description: Run a unit of work through the Director's Loop — route by blast radius, frame an approved spec, build under the verify-gate, review in a clean context, and ship. Arms the build-scoped gates for the duration.
+description: Run a unit of work through the ASDLC Loop — route by blast radius, frame an approved spec, build under the verify-gate, review in a clean context, and ship. Arms the build-scoped gates for the duration.
 ---
 
-You are the **director** of this build. Execute the Director's Loop for the task below.
-Encode the sequence — don't just describe it. Update `loop-state.json` as you move so the
+You are the **director** of this build. Execute the ASDLC Loop for the task below.
+Encode the sequence — don't just describe it. Update `asdlc-state.json` as you move so the
 gates know which phase they're in.
 
 **Task:** $ARGUMENTS
@@ -22,13 +22,13 @@ Record state so the verify-gate activates. Run this (adjust `phase` per track �
 BASE="$(git rev-parse HEAD 2>/dev/null || echo '')"
 jq -n --arg track "TRACK" --arg phase "frame" --arg base "$BASE" \
   '{active:true, track:$track, phase:$phase, base:$base}' \
-  > .claude/loop-state.json
+  > .claude/asdlc-state.json
 ```
 
 ## Phase 1 — Frame  (skip on Quick)
 Draft a short spec to `docs/specs/<date>-<slug>.md`: problem, scope, acceptance criteria, open
 questions. **Gate: present it and get the user's approval before coding.** Then advance:
-`jq '.phase="plan"' .claude/loop-state.json | sponge` (or write via a temp file).
+`jq '.phase="plan"' .claude/asdlc-state.json | sponge` (or write via a temp file).
 
 ## Phase 2–3 — Design & Plan  (skip on Quick)
 Propose 2–3 approaches with trade-offs; the user picks. Then write a checkable task list with a
@@ -54,7 +54,7 @@ governance stays in the repo, never in the shipped package.
 ## Disarm
 When the work is merged or paused, disarm the gates:
 ```bash
-jq '.active=false' .claude/loop-state.json > .claude/loop-state.tmp && mv .claude/loop-state.tmp .claude/loop-state.json
+jq '.active=false' .claude/asdlc-state.json > .claude/asdlc-state.tmp && mv .claude/asdlc-state.tmp .claude/asdlc-state.json
 ```
 
 ## Phase 7 — Learn

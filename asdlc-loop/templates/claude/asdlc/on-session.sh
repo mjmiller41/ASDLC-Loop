@@ -7,7 +7,7 @@ set -uo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$DIR/guard.sh"
 cat >/dev/null 2>&1 || true
-[ -f "$LOOP_STATE" ] || exit 0
+[ -f "$ASDLC_STATE" ] || exit 0
 tmp="$(mktemp)"
-if jq '.active = false' "$LOOP_STATE" >"$tmp" 2>/dev/null; then mv "$tmp" "$LOOP_STATE"; else rm -f "$tmp"; fi
+if jq '.active = false' "$ASDLC_STATE" >"$tmp" 2>/dev/null; then mv "$tmp" "$ASDLC_STATE"; else rm -f "$tmp"; fi
 exit 0

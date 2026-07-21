@@ -1,7 +1,7 @@
 # --- ASDLC-Loop ---
 # Runtime build state is per-session and must NOT be committed (the rest of .claude/ IS committed).
-.claude/loop-state.json
-.claude/loop-state.tmp
+.claude/asdlc-state.json
+.claude/asdlc-state.tmp
 
 # --- common ---
 node_modules/

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ASDLC-Loop — deterministic universal-core scaffold.
 # Plants the language-agnostic governance into a target repo. Idempotent: safe to re-run,
-# never clobbers an existing loop.config.json / CLAUDE.md, and merges rather than overwrites
+# never clobbers an existing asdlc.config.json / CLAUDE.md, and merges rather than overwrites
 # an existing .claude/settings.json (it emits MERGE_NEEDED for the caller to handle).
 #
 # Usage: scaffold.sh <target-dir> [level]     level = prototype|standard|production (default standard)
@@ -18,18 +18,18 @@ mkdir -p "$TARGET"
 cd "$TARGET"
 [ -d .git ] || git init -q
 
-mkdir -p .claude/loop .claude/commands .claude/agents docs/specs .github/workflows
+mkdir -p .claude/asdlc .claude/commands .claude/agents docs/specs .github/workflows
 
 # Our own files — safe to (re)write on every run.
-cp "$TPL"/claude/loop/*.sh        .claude/loop/
+cp "$TPL"/claude/asdlc/*.sh        .claude/asdlc/
 cp "$TPL"/claude/commands/*.md    .claude/commands/
 cp "$TPL"/claude/agents/*.md      .claude/agents/
-chmod +x .claude/loop/*.sh
+chmod +x .claude/asdlc/*.sh
 
 # Config — create once, then it's yours; only set the level on first creation.
-if [ ! -f .claude/loop.config.json ]; then
-  cp "$TPL/claude/loop.config.json" .claude/loop.config.json
-  tmp="$(mktemp)"; jq --arg l "$LEVEL" '.level=$l' .claude/loop.config.json >"$tmp" && mv "$tmp" .claude/loop.config.json
+if [ ! -f .claude/asdlc.config.json ]; then
+  cp "$TPL/claude/asdlc.config.json" .claude/asdlc.config.json
+  tmp="$(mktemp)"; jq --arg l "$LEVEL" '.level=$l' .claude/asdlc.config.json >"$tmp" && mv "$tmp" .claude/asdlc.config.json
 fi
 
 # settings.json — never clobber existing hooks; signal a merge instead.

@@ -1,9 +1,9 @@
 ---
 name: asdlc-adopt
-description: Retrofit an EXISTING repo with the Director's Loop, idempotently — adds only what's missing and merges (never clobbers) existing Claude Code settings.
+description: Retrofit an EXISTING repo with the ASDLC Loop, idempotently — adds only what's missing and merges (never clobbers) existing Claude Code settings.
 ---
 
-Adopt the Director's Loop into the existing repo at the current directory (or `$ARGUMENTS`). This is
+Adopt the ASDLC Loop into the existing repo at the current directory (or `$ARGUMENTS`). This is
 safe to run more than once; it only adds what's missing.
 
 ## Steps
@@ -18,21 +18,21 @@ safe to run more than once; it only adds what's missing.
    ```
 
 3. **Handle `MERGE_NEEDED`.** If the script reports an existing `.claude/settings.json`, **merge**
-   the Director's Loop hooks into it — do not overwrite. Deep-merge each event; for an event that
+   the ASDLC Loop hooks into it — do not overwrite. Deep-merge each event; for an event that
    already has entries, append our dispatcher hook alongside the existing ones. Show the user the
    merged result before saving.
 
-4. **Fill `.claude/loop.config.json` commands** from the project's real toolchain (step 1). Pick the
+4. **Fill `.claude/asdlc.config.json` commands** from the project's real toolchain (step 1). Pick the
    `level` with the user: `standard` for an active project, `production` for anything that ships to
    users.
 
 5. **Wire CI** only if the repo has no equivalent gate workflow already; otherwise leave theirs and
    note the overlap.
 
-6. **Commit:** `git add -A && git commit -m "chore: adopt Director's Loop"` — and tell the user the
+6. **Commit:** `git add -A && git commit -m "chore: adopt ASDLC Loop"` — and tell the user the
    gates are now live and committed, startable with `/build`.
 
 ## Idempotency contract
 Re-running refreshes the loop scripts/commands/agent, never touches an existing
-`loop.config.json`, `CLAUDE.md`, or their `settings.json` hooks. If nothing is missing, it's a no-op
+`asdlc.config.json`, `CLAUDE.md`, or their `settings.json` hooks. If nothing is missing, it's a no-op
 plus a scripts refresh.

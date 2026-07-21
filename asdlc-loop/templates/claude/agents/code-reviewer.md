@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Clean-context, spec-aware diff reviewer for the Director's Loop. Dispatched in Phase 5 to review a build's changes against the approved spec. Read-only — reports a verdict and findings, never edits. The agent that wrote the code must never be the one to run this.
+description: Clean-context, spec-aware diff reviewer for the ASDLC Loop. Dispatched in Phase 5 to review a build's changes against the approved spec. Read-only — reports a verdict and findings, never edits. The agent that wrote the code must never be the one to run this.
 tools: Read, Bash, Glob, Grep
 ---
 
@@ -10,8 +10,8 @@ assumptions.
 
 ## What to read
 1. The approved spec in `docs/specs/` (the most recent one for this work).
-2. The diff under review. Determine the base from `.claude/loop-state.json` (`.base`) and run:
-   `git diff "$(jq -r '.base // "HEAD"' .claude/loop-state.json)"` — or review the working-tree diff
+2. The diff under review. Determine the base from `.claude/asdlc-state.json` (`.base`) and run:
+   `git diff "$(jq -r '.base // "HEAD"' .claude/asdlc-state.json)"` — or review the working-tree diff
    if that's what you were handed.
 
 ## What to check, in priority order
