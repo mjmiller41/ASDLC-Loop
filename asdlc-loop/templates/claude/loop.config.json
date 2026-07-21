@@ -1,0 +1,19 @@
+{
+  "_help": "ASDLC-Loop project config — static and committed. 'level' sets rigor; 'commands' are your stack's gate commands (an empty command = that gate is skipped); 'gates' tune the guards. /loop-init fills 'commands' for your stack; edit any of it freely.",
+  "_levels": {
+    "prototype": "secrets + format only — verify-gate is skipped (spikes, throwaways)",
+    "standard": "secrets + format + lint + types + tests + reviewer (default)",
+    "production": "standard + tighter diffSize + mandatory review + human ship gate"
+  },
+  "level": "standard",
+  "commands": {
+    "test": "",
+    "lint": "",
+    "types": "",
+    "format": ""
+  },
+  "gates": {
+    "diffSize": 400,
+    "review": true
+  }
+}

@@ -2,7 +2,7 @@
 
 Local marketplace hosting a single plugin: **`asdlc-loop`** (in [`./asdlc-loop`](./asdlc-loop)).
 
-The plugin is the *seed* for the **Director's Loop** — a solo-operator, tiered, gated development
+The plugin is the *seed* for the **ASDLC Loop** — a solo-operator, tiered, gated development
 lifecycle for running real projects through Claude Code. It plants **committed, self-contained
 governance** into a repo (gates, a `/build` orchestrator, a clean-context reviewer) so the
 enforcement travels on `git clone` and never depends on the plugin being installed to *work in*
@@ -22,8 +22,8 @@ Then run `/reload-plugins` in your session so the new commands load.
 
 | Command | Purpose |
 |---|---|
-| `/loop-init` | Scaffold a **new** project: git init, stack-aware toolchain, and the committed `.claude/` governance, all in commit 1. |
-| `/loop-adopt` | Retrofit an **existing** repo, idempotently — adds only what's missing. |
+| `/asdlc-init` | Scaffold a **new** project: git init, stack-aware toolchain, and the committed `.claude/` governance, all in commit 1. |
+| `/asdlc-adopt` | Retrofit an **existing** repo, idempotently — adds only what's missing. |
 
 Everything the commands plant (hooks, `/build`, `/loop-off`, the reviewer subagent, `loop.config.json`)
 lives in the target project and is committed there. See [`asdlc-loop/README.md`](./asdlc-loop/README.md).

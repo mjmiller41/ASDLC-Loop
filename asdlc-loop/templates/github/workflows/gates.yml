@@ -1,0 +1,32 @@
+# ASDLC-Loop — CI backstop. Runs the SAME gate commands as the local verify-gate, straight from
+# .claude/loop.config.json, so a change can't merge red even if every in-agent gate were bypassed.
+# /loop-init adjusts the setup step for your stack (this default assumes Node; swap as needed).
+name: gates
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- stack setup (init customizes this block) ---
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then npm ci; elif [ -f package.json ]; then npm install; fi
+
+      # --- run the gate commands from loop.config.json ---
+      - name: Verify-gate (lint / types / tests)
+        run: |
+          set -e
+          cfg() { jq -r "$1 // empty" .claude/loop.config.json; }
+          for key in lint types test; do
+            cmd="$(cfg ".commands.$key")"
+            if [ -n "$cmd" ]; then echo "== $key: $cmd =="; eval "$cmd"; fi
+          done
