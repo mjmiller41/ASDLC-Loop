@@ -9,9 +9,9 @@ need the ASDLC-Loop plugin installed to work here.
 - **`/asdlc-off`** disarms the build gates if one wedges.
 
 ## The floors (enforced by hooks, not by asking)
-Two things actually block. Everything else in `/build` is **directed** — the loop instructs the
-agent to do it, and a determined agent (or you) can step around it. That is deliberate: scaffold,
-not sandbox.
+Two things always block, and `production` adds a third (the commit-floor, below). Everything else in
+`/build` is **directed** — the loop instructs the agent to do it, and a determined agent (or you) can
+step around it. That is deliberate: scaffold, not sandbox.
 - **Secret-scan** (always on) — a write whose content carries an obvious credential is blocked
   outright. A credential must never land on disk.
 - **Verify-gate** (during an active `/build`, above `prototype`) — lint → types → tests → diff-size
@@ -24,9 +24,9 @@ not sandbox.
   and writes a verdict artifact (`.claude/asdlc/verdicts/<base>-<head>.json`); the **`coder`**
   subagent that wrote the change may not approve its own work. This separation is directed.
 - **Commit-floor** — before a `git commit` during an active build, a hook checks for a fresh
-  `APPROVE` verdict matching the current `<base>-<head>`. At `production` a missing/stale verdict
-  **blocks** the commit; at `standard` it only nudges; advancing HEAD past the reviewed commit
-  invalidates the verdict.
+  `APPROVE` verdict matching the current `<base>-<head>`. Its strength follows `level` (see below):
+  at `standard` a missing/stale verdict only nudges (directed); at `production` it **blocks** the
+  commit (a floor). Advancing HEAD past the reviewed commit invalidates the verdict.
 - **Phase sequence, approval gates, TDD-first** — sequenced by `/build`, held by the agent.
 - **Irreversibility** — `/build` reminds the agent to get your explicit ok before anything
   irreversible (prod deploy, migration, live money), deferring the real stop to the harness'
