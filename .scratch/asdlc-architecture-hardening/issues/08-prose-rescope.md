@@ -10,11 +10,11 @@ behavioural contract — the structural check only asserts they are planted. (AD
 
 **Blocked by:** 02, 03, 04, 05, 06, 07.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `build.md` and `CLAUDE.md` scope "enforced" to secret-scan + verify-gate only; everything else is labelled directed
-- [ ] The `level`-moves-floors / `track`-moves-ceremony distinction is stated precisely
-- [ ] The verdict artifact + commit-floor behaviour is described
-- [ ] The `coder` role is referenced alongside the reviewer
-- [ ] Irreversibility is described as a directed reminder deferring to the harness prompt (+ optional `dangerCommands`)
-- [ ] Prose matches the behaviour shipped by tickets 02–07 (no aspirational claims)
+- [x] `build.md` and `CLAUDE.md` scope "enforced" to secret-scan + verify-gate only; everything else is labelled directed
+- [x] The `level`-moves-floors / `track`-moves-ceremony distinction is stated precisely
+- [x] The verdict artifact + commit-floor behaviour is described
+- [x] The `coder` role is referenced alongside the reviewer
+- [x] Irreversibility is described as a directed reminder deferring to the harness prompt (+ optional `dangerCommands`)
+- [x] Prose matches the behaviour shipped by tickets 02–07 (no aspirational claims)
