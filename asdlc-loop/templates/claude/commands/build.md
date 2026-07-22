@@ -36,18 +36,25 @@ test strategy per task. **Gate: user approves the plan.** Advance phase to `buil
 
 ## Phase 4 — Build  (verify-gate is now live)
 Set `phase="build"`. Implement under TDD: for each task write the **failing test first (RED)**,
-make it pass (GREEN), refactor. On Standard/Heavy, dispatch a **coder subagent** per task so
-implementation happens in a clean context. The Stop hook runs lint → types → tests → diff-size on
+make it pass (GREEN), refactor. On Standard/Heavy, dispatch the **`coder` subagent**
+(`.claude/agents/coder.md`) per task so implementation happens in a clean context. The Stop hook runs lint → types → tests → diff-size on
 every turn; if it blocks, fix and continue. Keep changes under the diff-size budget.
 
-## Phase 5 — Review  (separation of duties)
+## Phase 5 — Review  (directed separation of duties)
 Set `phase="review"`. Dispatch the **`code-reviewer` subagent** (`.claude/agents/code-reviewer.md`)
-in a clean context to review the diff against the spec. **The coder may not approve its own work.**
-On Heavy, run the reviewer 2–3 times (adversarial). Address every finding, then get the user's ok.
+in a clean context to review the diff against the spec. The reviewer writes a verdict artifact to
+`.claude/asdlc/verdicts/<base>-<head>.json`. **The `coder` that wrote the change may not approve its
+own work** — a directed rule, not a hard floor. On Heavy, run the reviewer 2–3 times (adversarial).
+Address every finding, then get the user's ok. When you `git commit`, a hook looks for a fresh
+`APPROVE` verdict matching the current `<base>-<head>`: at `production` a missing/stale one blocks the
+commit, at `standard` it only nudges (advancing HEAD past the reviewed commit invalidates it).
 
 ## Phase 6 — Ship
-Commit, open a PR, and deploy where reversible. **Gate: green CI + your explicit authorization for
-anything irreversible** (prod deploy, data migration, live money). Ship a clean artifact — exclude
+Commit, open a PR, and deploy where reversible. **Directed reminder: get the user's explicit
+authorization before anything irreversible** (prod deploy, data migration, live money) — the real
+stop is the harness' own permission prompt; this loop only reminds you to pause. Project-specific
+commands can be flagged for confirmation via the optional `dangerCommands` array in
+`.claude/asdlc.config.json`. Ship a clean artifact — exclude
 `.claude/` from the published/deployed bundle (that's what `.npmignore` / the build's copy step is for);
 governance stays in the repo, never in the shipped package.
 

@@ -26,4 +26,18 @@ Return **structured findings**, most-severe first. For each: `file:line`, one-se
 concrete failure scenario (inputs → wrong result). End with a one-line verdict:
 `APPROVE` (no blocking issues) or `REQUEST CHANGES` (list the blockers).
 
-Do **not** edit any files. Do **not** approve if you are uncertain — say what you couldn't verify.
+## Write the verdict artifact
+Record the verdict so it is visible and, at `production`, enforceable. Write a JSON file keyed to the
+exact SHA range you reviewed — `base` from `.claude/asdlc-state.json`, `head` from current HEAD:
+```bash
+BASE="$(jq -r '.base // "HEAD"' .claude/asdlc-state.json)"; HEAD="$(git rev-parse HEAD)"
+mkdir -p .claude/asdlc/verdicts
+jq -n --arg b "$BASE" --arg h "$HEAD" --arg v "APPROVE" --arg f "one-line summary of findings" \
+  '{base:$b, head:$h, verdict:$v, findings:$f}' > ".claude/asdlc/verdicts/${BASE}-${HEAD}.json"
+```
+Use `"REQUEST CHANGES"` for `verdict` when you found blockers. The commit-floor reads this file: at
+`production` a commit is blocked unless a matching `APPROVE` for the current `base..head` exists, so the
+artifact goes stale automatically once more code lands (the SHA range no longer matches).
+
+Do **not** edit any source files. Writing this verdict artifact is your only write. Do **not** approve
+if you are uncertain — say what you couldn't verify, and record `REQUEST CHANGES`.

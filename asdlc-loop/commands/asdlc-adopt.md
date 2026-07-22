@@ -12,24 +12,40 @@ safe to run more than once; it only adds what's missing.
    `scripts` for real lint/test/format commands); `pyproject.toml`/`setup.py` → Python;
    `go.mod` → Go. Use the project's actual commands, not generic defaults.
 
-2. **Plant the universal core** (idempotent; preserves existing config + settings):
+2. **Standardize the trunk on `main`.** ASDLC governance targets `main` — the committed
+   `gates.yml` triggers on it. If this repo's trunk is still `master`, rename it (confirm with the
+   user first — renaming a trunk is not a silent change):
+   ```bash
+   git branch -m master main            # local rename; run before you branch for the adoption
+   ```
+   If a remote exists, once the adoption is pushed, point everything at `main` too:
+   ```bash
+   git push -u origin main
+   gh repo edit --default-branch main   # move the remote default
+   git push origin --delete master      # only after retargeting any open PRs to main
+   ```
+   If the repo is already on `main` (or has no `master`), skip this step. Never rename non-trunk
+   branches. Because the trunk is now `main`, the `gates.yml` trigger needs no edit.
+
+3. **Plant the universal core** (idempotent; preserves existing config + settings):
    ```bash
    bash "${CLAUDE_PLUGIN_ROOT}/scripts/scaffold.sh" "$(pwd)" standard
    ```
 
-3. **Handle `MERGE_NEEDED`.** If the script reports an existing `.claude/settings.json`, **merge**
+4. **Handle `MERGE_NEEDED`.** If the script reports an existing `.claude/settings.json`, **merge**
    the ASDLC Loop hooks into it — do not overwrite. Deep-merge each event; for an event that
    already has entries, append our dispatcher hook alongside the existing ones. Show the user the
    merged result before saving.
 
-4. **Fill `.claude/asdlc.config.json` commands** from the project's real toolchain (step 1). Pick the
+5. **Fill `.claude/asdlc.config.json` commands** from the project's real toolchain (step 1). Pick the
    `level` with the user: `standard` for an active project, `production` for anything that ships to
    users.
 
-5. **Wire CI** only if the repo has no equivalent gate workflow already; otherwise leave theirs and
-   note the overlap.
+6. **Wire CI** only if the repo has no equivalent gate workflow already; otherwise leave theirs and
+   note the overlap. The template's trigger (`main`) is already correct after step 2 — no branch
+   edit. Do adjust its stack-setup block (the default assumes Node; swap for Python/Go/etc.).
 
-6. **Commit:** `git add -A && git commit -m "chore: adopt ASDLC Loop"` — and tell the user the
+7. **Commit:** `git add -A && git commit -m "chore: adopt ASDLC Loop"` — and tell the user the
    gates are now live and committed, startable with `/build`.
 
 ## Idempotency contract
