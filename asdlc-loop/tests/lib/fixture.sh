@@ -20,6 +20,8 @@ new_repo() {
     mkdir -p .claude/asdlc
     cp "$TPL"/claude/asdlc/*.sh .claude/asdlc/
     cp "$TPL"/claude/asdlc.config.json .claude/asdlc.config.json
+    # Runtime state is gitignored in a real scaffold, so writing it never dirties the tree.
+    echo '.claude/asdlc-state.json' > .gitignore
     echo seed > README.md
     git add -A >/dev/null
     git commit -qm init
@@ -39,4 +41,5 @@ config_set() { # config_set <repo> <jq-filter> — mutate the committed config i
   jq "$2" "$(config "$1")" > "$tmp" && mv "$tmp" "$(config "$1")"
 }
 
-make_dirty() { echo "change" >> "$1/work.txt"; }      # leave an uncommitted working-tree change
+make_dirty()  { echo "change" >> "$1/work.txt"; }     # leave an uncommitted working-tree change
+commit_all()  { ( cd "$1" && git add -A >/dev/null && git commit -qm change ); }  # bank current edits into a clean tree

@@ -9,12 +9,12 @@ state only to drive softer nudges — it no longer gates the floor. (ADR-0002)
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Gate blocks (exit 2) when active and the tree is dirty, for ANY `phase` value
-- [ ] Gate is dormant when not active
-- [ ] Gate is dormant when active but the working tree is clean
-- [ ] Gate is dormant when `level` is `prototype`
-- [ ] Commands still run cheapest-first and block on the first failure
-- [ ] Diff-size guard still blocks when the diff against the recorded base exceeds `diffSize`
-- [ ] Behavioural cases at the seam cover each of the above
+- [x] Gate blocks (exit 2) when active and the tree is dirty, for ANY `phase` value
+- [x] Gate is dormant when not active
+- [x] Gate is dormant when active but the working tree is clean
+- [x] Gate is dormant when `level` is `prototype`
+- [x] Commands still run cheapest-first and block on the first failure
+- [x] Diff-size guard still blocks when the diff against the recorded base exceeds `diffSize`
+- [x] Behavioural cases at the seam cover each of the above

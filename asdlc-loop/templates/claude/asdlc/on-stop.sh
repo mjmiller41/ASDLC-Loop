@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-# Stop — the verify-gate. BUILD-SCOPED. Runs the config's gate commands cheapest-first
-# and blocks the turn from completing (exit 2) if any fail. Dormant unless a build is
-# armed, the phase is build|review, the level isn't prototype, and something changed.
+# Stop — the verify-gate. A FLOOR keyed off observable git state, not the director's
+# self-reported phase: it runs whenever a build is armed and the working tree is dirty,
+# for any phase, and blocks the turn (exit 2) if a gate fails. Dormant when no build is
+# armed, when the tree is clean, or when the level is prototype. `phase` is read only to
+# label the message and drive softer nudges elsewhere — it does not gate the floor. (ADR-0002)
 set -uo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 . "$DIR/guard.sh"
 PAYLOAD="$(cat)"
 
 asdlc_active || exit 0                                   # no build armed -> dormant
-PHASE="$(asdlc_phase)"
-phase_in "$PHASE" build review || exit 0                # wrong phase -> dormant
+PHASE="$(asdlc_phase)"                                   # for the message only; does not gate
 [ "$(asdlc_level)" = "prototype" ] && exit 0             # prototype: secrets+format only
-[ -n "$(git -C "$ASDLC_ROOT" status --porcelain 2>/dev/null)" ] || exit 0  # nothing changed
+[ -n "$(git -C "$ASDLC_ROOT" status --porcelain 2>/dev/null)" ] || exit 0  # clean tree -> dormant
 
 fail() { echo "ASDLC-Loop verify-gate ($PHASE): $1" >&2; exit 2; }
 
