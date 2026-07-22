@@ -10,13 +10,13 @@ the structural check extended. (ADR-0006)
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The reviewer subagent writes a verdict artifact keyed to the reviewed `base..head` SHAs
-- [ ] At `production`, commit is blocked when no matching artifact exists
-- [ ] At `production`, commit is blocked when the matching artifact says REQUEST CHANGES
-- [ ] At `production`, commit is blocked when the artifact's range is stale (more code landed)
-- [ ] At `production`, commit is allowed on a current matching APPROVE
-- [ ] At `standard`, the same conditions nudge but never block
-- [ ] Planted `settings.json` registers the commit-path hook; structural check asserts it
-- [ ] Behavioural cases at the seam cover each production/standard condition
+- [x] The reviewer subagent writes a verdict artifact keyed to the reviewed `base..head` SHAs
+- [x] At `production`, commit is blocked when no matching artifact exists
+- [x] At `production`, commit is blocked when the matching artifact says REQUEST CHANGES
+- [x] At `production`, commit is blocked when the artifact's range is stale (more code landed)
+- [x] At `production`, commit is allowed on a current matching APPROVE
+- [x] At `standard`, the same conditions nudge but never block
+- [x] Planted `settings.json` registers the commit-path hook; structural check asserts it
+- [x] Behavioural cases at the seam cover each production/standard condition

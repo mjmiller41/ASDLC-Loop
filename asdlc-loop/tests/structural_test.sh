@@ -16,7 +16,7 @@ assert_contains "OK: universal core scaffolded" "scaffold reports success"
 for f in \
   .claude/asdlc/guard.sh .claude/asdlc/on-write.sh .claude/asdlc/on-stop.sh \
   .claude/asdlc/on-subagent.sh .claude/asdlc/on-session.sh .claude/asdlc/on-format.sh \
-  .claude/asdlc/on-prompt.sh \
+  .claude/asdlc/on-prompt.sh .claude/asdlc/on-commit.sh \
   .claude/commands/build.md .claude/commands/asdlc-off.md \
   .claude/agents/code-reviewer.md .claude/agents/coder.md \
   .claude/asdlc.config.json .claude/settings.json \
@@ -42,6 +42,10 @@ settings="$tmp/.claude/settings.json"
 for ev in UserPromptSubmit PreToolUse PostToolUse Stop SubagentStop SessionStart; do
   assert_true "settings registers $ev" jq -e --arg e "$ev" '.hooks[$e]' "$settings" >/dev/null
 done
+
+# The commit-floor is a PreToolUse:Bash hook — assert that matcher/registration specifically.
+assert_true "PreToolUse registers a Bash matcher for the commit-floor" \
+  jq -e '[.hooks.PreToolUse[] | select(.matcher=="Bash") | .hooks[].command | select(test("on-commit.sh"))] | length > 0' "$settings" >/dev/null
 
 rm -rf "$tmp"
 finish
