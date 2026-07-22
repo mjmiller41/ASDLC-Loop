@@ -9,9 +9,9 @@ committed file. (ADR-0008)
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A `coder.md` subagent is planted, carrying TDD-first, scope-restraint, and diff-budget discipline
-- [ ] `scaffold.sh` plants the coder alongside the reviewer
-- [ ] Structural check asserts every role `build.md` names has a committed file (incl. coder)
-- [ ] The coder is documented as context-hygiene ceremony, distinct from the reviewer's independence role
+- [x] A `coder.md` subagent is planted, carrying TDD-first, scope-restraint, and diff-budget discipline
+- [x] `scaffold.sh` plants the coder alongside the reviewer
+- [x] Structural check asserts every role `build.md` names has a committed file (incl. coder)
+- [x] The coder is documented as context-hygiene ceremony, distinct from the reviewer's independence role

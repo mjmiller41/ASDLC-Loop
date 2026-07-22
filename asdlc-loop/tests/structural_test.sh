@@ -18,7 +18,7 @@ for f in \
   .claude/asdlc/on-subagent.sh .claude/asdlc/on-session.sh .claude/asdlc/on-format.sh \
   .claude/asdlc/on-prompt.sh \
   .claude/commands/build.md .claude/commands/asdlc-off.md \
-  .claude/agents/code-reviewer.md \
+  .claude/agents/code-reviewer.md .claude/agents/coder.md \
   .claude/asdlc.config.json .claude/settings.json \
   CLAUDE.md .gitignore .github/workflows/gates.yml docs/specs/.gitkeep
 do
@@ -27,6 +27,15 @@ done
 
 # Hook scripts are executable.
 assert_true "on-write.sh is executable" test -x "$tmp/.claude/asdlc/on-write.sh"
+
+# Every role build.md names by path must be a committed file — a cloned repo must never
+# reference an agent that isn't there (ADR-0008). Parse the .claude/agents/<name>.md refs.
+build="$tmp/.claude/commands/build.md"
+roles="$(grep -oE '\.claude/agents/[A-Za-z0-9_-]+\.md' "$build" | sort -u)"
+assert_true "build.md names at least one agent role" test -n "$roles"
+for r in $roles; do
+  assert_true "role referenced by build.md is planted: $r" test -f "$tmp/$r"
+done
 
 # settings.json registers today's hook events.
 settings="$tmp/.claude/settings.json"

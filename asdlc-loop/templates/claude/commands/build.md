@@ -36,8 +36,8 @@ test strategy per task. **Gate: user approves the plan.** Advance phase to `buil
 
 ## Phase 4 — Build  (verify-gate is now live)
 Set `phase="build"`. Implement under TDD: for each task write the **failing test first (RED)**,
-make it pass (GREEN), refactor. On Standard/Heavy, dispatch a **coder subagent** per task so
-implementation happens in a clean context. The Stop hook runs lint → types → tests → diff-size on
+make it pass (GREEN), refactor. On Standard/Heavy, dispatch the **`coder` subagent**
+(`.claude/agents/coder.md`) per task so implementation happens in a clean context. The Stop hook runs lint → types → tests → diff-size on
 every turn; if it blocks, fix and continue. Keep changes under the diff-size budget.
 
 ## Phase 5 — Review  (separation of duties)
