@@ -34,6 +34,8 @@ state() { echo "$1/.claude/asdlc-state.json"; }
 config(){ echo "$1/.claude/asdlc.config.json"; }
 
 set_state()  { printf '%s' "$2" > "$(state "$1")"; }  # set_state <repo> <json>
+get_state()  { jq -r "$2" "$(state "$1")" 2>/dev/null; }  # get_state <repo> <jq-path> -> value
+git_head()   { ( cd "$1" && git rev-parse HEAD ); }   # current HEAD sha of the fixture
 set_config() { printf '%s' "$2" > "$(config "$1")"; } # set_config <repo> <json>
 
 config_set() { # config_set <repo> <jq-filter> — mutate the committed config in place

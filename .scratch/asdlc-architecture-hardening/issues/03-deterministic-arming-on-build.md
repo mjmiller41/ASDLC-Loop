@@ -9,11 +9,11 @@ in the planted `settings.json`, and the structural check is extended to assert t
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A `/build ...` prompt arms the build: `active=true` and `base` set to current HEAD
-- [ ] A prompt that only mentions "build" in prose does not arm
-- [ ] Planted `settings.json` registers the `UserPromptSubmit` hook
-- [ ] Structural check asserts the new registration
-- [ ] Behavioural cases at the seam cover arm-vs-no-arm
-- [ ] Opting out (never running `/build`, or `/asdlc-off`) remains possible and unaffected
+- [x] A `/build ...` prompt arms the build: `active=true` and `base` set to current HEAD
+- [x] A prompt that only mentions "build" in prose does not arm
+- [x] Planted `settings.json` registers the `UserPromptSubmit` hook
+- [x] Structural check asserts the new registration
+- [x] Behavioural cases at the seam cover arm-vs-no-arm
+- [x] Opting out (never running `/build`, or `/asdlc-off`) remains possible and unaffected

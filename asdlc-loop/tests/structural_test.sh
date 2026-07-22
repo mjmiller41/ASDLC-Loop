@@ -16,6 +16,7 @@ assert_contains "OK: universal core scaffolded" "scaffold reports success"
 for f in \
   .claude/asdlc/guard.sh .claude/asdlc/on-write.sh .claude/asdlc/on-stop.sh \
   .claude/asdlc/on-subagent.sh .claude/asdlc/on-session.sh .claude/asdlc/on-format.sh \
+  .claude/asdlc/on-prompt.sh \
   .claude/commands/build.md .claude/commands/asdlc-off.md \
   .claude/agents/code-reviewer.md \
   .claude/asdlc.config.json .claude/settings.json \
@@ -29,7 +30,7 @@ assert_true "on-write.sh is executable" test -x "$tmp/.claude/asdlc/on-write.sh"
 
 # settings.json registers today's hook events.
 settings="$tmp/.claude/settings.json"
-for ev in PreToolUse PostToolUse Stop SubagentStop SessionStart; do
+for ev in UserPromptSubmit PreToolUse PostToolUse Stop SubagentStop SessionStart; do
   assert_true "settings registers $ev" jq -e --arg e "$ev" '.hooks[$e]' "$settings" >/dev/null
 done
 
