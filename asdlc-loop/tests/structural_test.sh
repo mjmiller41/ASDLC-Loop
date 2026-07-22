@@ -16,7 +16,7 @@ assert_contains "OK: universal core scaffolded" "scaffold reports success"
 for f in \
   .claude/asdlc/guard.sh .claude/asdlc/on-write.sh .claude/asdlc/on-stop.sh \
   .claude/asdlc/on-subagent.sh .claude/asdlc/on-session.sh .claude/asdlc/on-format.sh \
-  .claude/asdlc/on-prompt.sh .claude/asdlc/on-commit.sh \
+  .claude/asdlc/on-prompt.sh .claude/asdlc/on-commit.sh .claude/asdlc/config-check.sh \
   .claude/commands/build.md .claude/commands/asdlc-off.md \
   .claude/agents/code-reviewer.md .claude/agents/coder.md \
   .claude/asdlc.config.json .claude/settings.json \
@@ -36,6 +36,10 @@ assert_true "build.md names at least one agent role" test -n "$roles"
 for r in $roles; do
   assert_true "role referenced by build.md is planted: $r" test -f "$tmp/$r"
 done
+
+# The CI mirror runs the config-integrity tripwire.
+assert_true "gates.yml runs the config-integrity check" \
+  grep -q 'config-check.sh' "$tmp/.github/workflows/gates.yml"
 
 # settings.json registers today's hook events.
 settings="$tmp/.claude/settings.json"

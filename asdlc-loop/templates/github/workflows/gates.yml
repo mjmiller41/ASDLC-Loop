@@ -13,6 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # --- config-integrity tripwire ---
+      # CI runs the config's OWN commands, so a commit that guts the config would pass silently.
+      # This asserts the config still matches its declared level; it fails CI on a weakened config.
+      - name: Config-integrity
+        run: bash .claude/asdlc/config-check.sh
+
       # --- stack setup (init customizes this block) ---
       - uses: actions/setup-node@v4
         with:

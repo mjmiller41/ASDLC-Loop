@@ -11,11 +11,11 @@ small script so it is testable at the behavioural seam. CI stays advisory (no br
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A config-integrity check script passes on a well-formed `standard` config
-- [ ] It fails when `standard` and any of lint/types/test commands is empty
-- [ ] It fails when `production` and the review floor is off
-- [ ] It passes for `prototype` (no command requirement)
-- [ ] `gates.yml` runs the check as an advisory step (no branch protection introduced)
-- [ ] Behavioural cases at the seam cover pass/fail per level
+- [x] A config-integrity check script passes on a well-formed `standard` config
+- [x] It fails when `standard` and any of lint/types/test commands is empty
+- [x] It fails when `production` and the review floor is off
+- [x] It passes for `prototype` (no command requirement)
+- [x] `gates.yml` runs the check as an advisory step (no branch protection introduced)
+- [x] Behavioural cases at the seam cover pass/fail per level
