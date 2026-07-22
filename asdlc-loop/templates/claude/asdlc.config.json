@@ -1,5 +1,5 @@
 {
-  "_help": "ASDLC-Loop project config — static and committed. 'level' sets rigor; 'commands' are your stack's gate commands (an empty command = that gate is skipped); 'gates' tune the guards. /asdlc-init fills 'commands' for your stack; edit any of it freely.",
+  "_help": "ASDLC-Loop project config — static and committed. 'level' sets rigor; 'commands' are your stack's gate commands (an empty command = that gate is skipped); 'gates' tune the guards; optional 'dangerCommands' is an array of extended-regexes for Bash commands this project treats as irreversible (flagged for explicit confirmation) — leave it out or empty to disable. /asdlc-init fills 'commands' for your stack; edit any of it freely.",
   "_levels": {
     "prototype": "secrets + format only — verify-gate is skipped (spikes, throwaways)",
     "standard": "secrets + format + lint + types + tests + reviewer (default)",
@@ -15,5 +15,6 @@
   "gates": {
     "diffSize": 400,
     "review": true
-  }
+  },
+  "dangerCommands": []
 }

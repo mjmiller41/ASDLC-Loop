@@ -9,10 +9,10 @@ added and structural check extended. (ADR-0009)
 
 **Blocked by:** 01.
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `asdlc.config.json` supports an optional `dangerCommands` array
-- [ ] The hook flags a Bash command that matches a configured regex
-- [ ] The hook no-ops when `dangerCommands` is absent or empty
-- [ ] Planted `settings.json` registers the `PreToolUse: Bash` hook; structural check asserts it
-- [ ] Behavioural cases at the seam cover match / no-match / unconfigured
+- [x] `asdlc.config.json` supports an optional `dangerCommands` array
+- [x] The hook flags a Bash command that matches a configured regex
+- [x] The hook no-ops when `dangerCommands` is absent or empty
+- [x] Planted `settings.json` registers the `PreToolUse: Bash` hook; structural check asserts it
+- [x] Behavioural cases at the seam cover match / no-match / unconfigured
